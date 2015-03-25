@@ -1,4 +1,4 @@
 wikipath
 ========
 
-A simple crawler in Python that finds the shortest path (of internal hyperlinks) between two wikipedia articles
+The Wikipedia game: given two articles, find the shortest path of internal hyperlinks between them.
