@@ -30,12 +30,13 @@ main = do
     hist <- atomically $ newTVar M.empty
     let go prev curr = join . atomically $ do
             h <- readTVar hist
-            if M.member curr h then return sleep else do
-                let new = M.insert curr prev h
-                writeTVar hist new
-                return $ if curr == end
-                         then print . intercalate " --> " $ gather start end new
-                         else kids curr >>= choices (go curr)
+            if M.member curr h
+            then return sleep
+            else let new = M.insert curr prev h
+                 in do writeTVar hist new
+                       return $ if curr == end
+                                then print . intercalate " --> " $ gather start end new
+                                else kids curr >>= choices (go curr)
     go undefined start
 
 -- THIS IS SO LENS-LIKE
@@ -53,16 +54,16 @@ kids = fmap links . get . ("http://www.wikipedia.com/wiki/" ++)
 
 links :: Response B.ByteString -> [String]
 links = map (takeWhile (/= '#'))
-         . filter (not . elem ':')
-         . catMaybes
-         . map (stripPrefix "/wiki/")
-         . toListOf ( responseBody
-                    . unpackedChars
-                    . packed
-                    . html
-                    . elements
-                    . allNamed (only "a")
-                    . attr "href"
-                    . _Just
-                    . unpacked
-                    )
+      . filter (not . elem ':')
+      . catMaybes
+      . map (stripPrefix "/wiki/")
+      . toListOf ( responseBody
+                 . unpackedChars
+                 . packed
+                 . html
+                 . elements
+                 . allNamed (only "a")
+                 . attr "href"
+                 . _Just
+                 . unpacked
+                 )
