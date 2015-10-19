@@ -32,7 +32,7 @@ def getBranches(page):
     request = urllib2.Request(head + middle + page)
     response = urllib2.urlopen(request)
     html = response.read()
-    soup = BeautifulSoup(html)
+    soup = BeautifulSoup(html, "html.parser")
 
     # here we narrow the soup down to hyperlinks within the article's body
     links = soup.find(id='mw-content-text').find_all('a',href=True)
