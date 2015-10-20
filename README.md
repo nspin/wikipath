@@ -8,7 +8,7 @@ This project currently contains two implementations of the program that plays th
 ### Python
 
 The Python version, found in `./python`, depends on Beautiful Soup 4 (tested with 4.4.0), and has only been tested with python 2.7.
-The easiest way to run it is with [nix](https://nixos.org).
+The easiest way to run it is with the [nix](https://nixos.org) package manager.
 Inside of `./python/`, run `nix-shell` to enter a shell with everything the script needs, and then run:
 
 ```
